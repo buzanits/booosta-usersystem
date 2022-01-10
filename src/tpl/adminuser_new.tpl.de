@@ -1,0 +1,17 @@
+{BBOXCENTER}
+{BPANEL|paneltitle::Neuer Administrator}
+ 
+{BFORMSTART|admin_adminuser}
+{HIDDEN|action|newdo}
+{HIDDEN|form_token|{%form_token}}
+
+  {BTEXT|username|texttitle::Benutzername|val-required::1}
+  {BPASSWORD|password|Passwort|val-required::1}
+  {BPASSWORD|password1|Passwort wiederholen|val-required::1|val-equalTo::password|val-err-equalTo::Die Passwörter müssen übereinstimmen}
+  {BTEXTAREA|comment|10|Kommentar}
+
+  {BFORMSUBMIT class::center-block}
+{BFORMEND}
+
+{/BPANEL}
+{/BBOXCENTER}

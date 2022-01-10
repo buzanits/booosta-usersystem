@@ -1,0 +1,34 @@
+{BBOXCENTER}
+{BPANEL|paneltitle::Administrator bearbeiten}
+
+{BFORMSTART|admin_adminuser}
+{HIDDEN|action|editdo}
+{HIDDEN|id|{%object_id}}
+{HIDDEN|form_token|{%form_token}}
+
+  {BCHECKBOX|active|{%active}|texttitle::Aktiv}
+  {BTEXT|username|{%username}|texttitle::Benutzername|val-required::1}
+  {BPASSWORD|password|Passwort (leer für keine Änderung)}
+  {BPASSWORD|password1|Passwort wiederholen|val-equalTo::password|val-err-equalTo::Die Passwörter müssen übereinstimmen}
+  {BTEXTAREA|comment|10|Kommentar
+{%comment}}
+  {BFORMGRP|Privileges|size::4}{%sel_privileges}{/BFORMGRP}
+  {BFORMGRP|Roles|size::4}{%sel_roles}{/BFORMGRP}
+
+  {BFORMSUBMIT|class::center-block}
+{BFORMEND}
+
+{/BPANEL}
+{/BBOXCENTER}
+
+<br><br>
+
+%if({%show_token}):
+{BBOXCENTER}
+{BPANEL|paneltitle::Twofactor-Login}
+
+{%token_links}
+
+{/BPANEL}
+{/BBOXCENTER}
+%endif;

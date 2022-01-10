@@ -1,0 +1,21 @@
+{BBOXCENTER}
+{BPANEL|paneltitle::Passwort ändern}
+
+{BFORMSTART|user_self|onSubmit::return checkForm();}
+ {HIDDEN action editdo}
+ {HIDDEN id {%id}}
+ {HIDDEN|form_token|{%form_token}}
+
+ {BSTATIC {*username} Benutzername}
+ {BCHECKBOX|pwd|texttitle::aktuelles Passwort anzeigen}
+ <div id="div_pwd">
+ {BSTATIC|{%oldpassword}}
+ </div>
+ {BPASSWORD|curpassword|Derzeitiges Passwort}
+ {BPASSWORD|password|Neues Passwort}
+ {BPASSWORD|password1|Neues Passwort wiederholen}
+
+ {BFORMSUBMIT class::center-block}
+{BFORMEND}
+{/BPANEL}
+{/BBOXCENTER}

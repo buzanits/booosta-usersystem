@@ -1,0 +1,18 @@
+{BBOXCENTER}
+{BPANEL|paneltitle::Neuer Benutzer}
+
+{BFORMSTART|admin_user}
+{HIDDEN|action|newdo}
+{HIDDEN|form_token|{%form_token}}
+
+  {BEMAIL|username|texttitle::Benutzername (= Email)|val-required::1}
+  {%sel_region}
+  {BPASSWORD|password|Passwort|val-required::1}
+  {BPASSWORD|password1|Passwort wiederholen|val-required::1|val-equalTo::password|val-err-equalTo::Die Passwörter müssen überein stimmen}
+  {BTEXTAREA|comment|10|Kommentar}
+
+  {BFORMSUBMIT|class::center-block}
+{BFORMEND}
+
+{/BPANEL}
+{/BBOXCENTER}

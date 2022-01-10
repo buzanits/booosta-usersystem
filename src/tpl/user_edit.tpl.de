@@ -1,0 +1,38 @@
+{BBOXCENTER}
+{BPANEL|paneltitle::Benutzer bearbeiten}
+
+{BFORMSTART|admin_user}
+{HIDDEN|action|editdo}
+{HIDDEN|id|{%object_id}}
+{HIDDEN|form_token|{%form_token}}
+
+  {BCHECKBOX|active|{%active}|texttitle::Aktiv}
+  {BEMAIL|username|{%username}|texttitle::Benutzername (= Email)|val-required::1}
+  {%sel_region}
+  {BPASSWORD|password|Passwort (leer für keine Änderung)}
+  {BPASSWORD|password1|Passwort wiederholen|val-equalTo::password|val-err-equalTo::Die Passwörter müssen überein stimmen}
+  {BTEXTAREA|comment|10|Kommentar
+{%comment}}
+  {BFORMGRP|Rechte|size::4}{%sel_privileges}{/BFORMGRP}
+  {BFORMGRP|Rollen|size::4}{%sel_roles}{/BFORMGRP}
+
+  {BFORMSUBMIT|class::center-block}
+{BFORMEND}
+
+{/BPANEL}
+{/BBOXCENTER}
+
+{BLINK|Passwortänderung erzwingen|admin_user/forcepwchange/{%object_id}}
+
+<br><br>
+
+%if({%show_token}):
+{BBOXCENTER}
+{BPANEL|paneltitle::Zweifaktor-Login}
+
+{%token_links}
+
+{/BPANEL}
+{/BBOXCENTER}
+%endif;
+

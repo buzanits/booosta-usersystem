@@ -1,0 +1,10 @@
+{BBOXCENTER}
+{BPANEL|paneltitle::Benutzer}
+{BLINKADD|Neuer Benutzer|admin_user/new}
+<br>
+<br>
+
+{%liste}
+
+{/BPANEL}
+{/BBOXCENTER}

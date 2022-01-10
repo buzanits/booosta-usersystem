@@ -1,0 +1,34 @@
+{BBOXCENTER}
+{BPANEL|paneltitle::Passwort ändern}
+
+{BFORMSTART|admin_self|onSubmit::return checkForm();}
+ {HIDDEN action editdo}
+ {HIDDEN id {%id}}
+ {HIDDEN|form_token|{%form_token}}
+
+ 
+ {BSTATIC {*username} Benutzername}
+ {BPASSWORD|curpassword|Derzeitiges Passwort}
+ {BPASSWORD|password|Neues Passwort}
+ {BPASSWORD|password1|Neues Passwort wiederholen}
+ 
+{BCHECKBOX|showpassword|texttitle::Passwort anzeigen}
+<div id="div_showpassword">
+{BSTATIC|{%plaintextpassword}}
+</div>
+
+ {BFORMSUBMIT class::center-block}
+{BFORMEND}
+{BLINK|Zurück|javascript:history.go(-1);}
+{/BPANEL}
+{/BBOXCENTER}
+
+%if({%show_token}):
+{BBOXCENTER}
+{BPANEL|paneltitle::Zweifaktor-Login}
+
+{%token_links}
+
+{/BPANEL}
+{/BBOXCENTER}
+%endif;

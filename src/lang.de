@@ -1,0 +1,30 @@
+<?php
+$this->map = [
+
+'edit'              => 'bearbeiten',
+'delete'            => 'l&ouml;schen',
+'username'          => 'Benutzername',
+'comment'           => 'Kommentar',
+'role'              => 'Rolle',
+'privilege'          => 'Recht',
+'You are not logged in or your session has expired' => 'Sie sind nicht eingeloggt oder Ihre Sitzung ist abgelaufen',
+
+'Wrong username or password'  =>  'Falscher Benutzername oder Passwort',
+
+'username or Email not found'   => 'Benutzername oder E-Mail nicht gefunden',
+'Your password can be reset using this link'    =>  'Ihr Passwort kann mit folgendem Link zurückgesetzt werden',
+'password reset'    => 'Passwort-Reset',
+'You will receive an email with a link to the password reset page'  => 'Sie erhalten einen Link, mit dem das Passwort zurückgesetzt werden kann',
+'The passwords must match'  => 'Die Passwörter müssen übereinstimmen',
+'Wrong token or username.'  => 'Token oder Benutzername falsch',
+'Your password has been reset. You can now login in with the new password'  => 'Ihr Passwort wurde zurückgesetzt. Sie können nun damit einloggen',
+
+'Please enter this field' => 'Dieses Feld muss ausgefüllt werden',
+'Account edited successfully' => 'Benutzer erfolgreich bearbeitet',
+'Register success'      => 'Registrierung erfolgreich. Sie erhalten demnächst eine E-Mail',
+'Your registration with Civis' =>  'Ihre Civis-Registrierung',
+'You have been registered as' => 'Sie haben sich registriert als',
+'Click on the following link to complete your registration' => 'Klicken Sie auf folgenden Link, um die Registrierung zu bestätigen',
+'Your account has been successully confirmed. You can now login with your username and password.' => 'Ihr Benutzerkonto wurde bestätigt. Sie können sich nun anmelden.',
+
+];
