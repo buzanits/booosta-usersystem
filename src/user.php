@@ -1,26 +1,15 @@
 <?php
 namespace booosta\usersystem;
 
-include '../../chroot.php';
-require_once __DIR__ . '/vendor/autoload.php';
-
-use booosta\Framework as b;
-b::load();
-
-class App extends Webappuser
+class user extends \booosta\genericuser\Genericuser
 {
-  public $base_dir = '../../../';
-  public $tpldir = 'vendor/booosta/usersystem/';
-  public $translator_dir = 'vendor/booosta/usersystem';
-  public $translator_merge = true;
+  protected $user_type = 'user';
 
-  protected function init()
-  {
-    parent::init();
-    if($index = $this->config('index_user')) $this->redirect("$this->base_dir$index");
+  public function make_authenticator() 
+  { 
+    $class = $this->config('user_authenticator') ?? "\\booosta\\usersystem\\User_Authenticator";
+    return $this->makeInstance($class);
   }
+  
+  protected function make_privileges() { return $this->makeInstance("\\booosta\\usersystem\\User_Privileges"); }
 }
-
-$app = new App();
-$app->auth_user();
-$app();

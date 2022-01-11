@@ -1,20 +1,23 @@
 <?php
 namespace booosta\usersystem;
 
-include_once '../../chroot.php';
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use booosta\Framework as b;
+b::croot();
 b::load();
+
 
 class App extends Webappuser
 {
   protected $name = 'user';
   #protected $usersystem_dir = '';
-  public $base_dir = '../../../';
-  public $tpldir = 'vendor/booosta/usersystem/';
+  public $base_dir = '/';
+  #public $tpldir = 'vendor/booosta/usersystem/';
+  public $subtpldir = 'vendor/booosta/usersystem/exec/';
   public $translator_dir = 'vendor/booosta/usersystem';
   protected $translator_merge = true;
+  protected $cfg_toptpl = 'blank.html';
 
 
   protected function action_default()
@@ -39,6 +42,7 @@ class App extends Webappuser
     $this->TPL['ajaxurl'] = "http://{$_SERVER['SERVER_NAME']}$this->phpself?action=checkusername";
 
     $this->TPL['username_taken'] = $this->t('username already taken');
+    $this->generate_form_token();
   }
 
   protected function action_checkusername()

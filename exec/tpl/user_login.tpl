@@ -8,7 +8,7 @@
   <center>You are not logged in or your session has expired.</center>
 </div>
 
-{FORMSTART|login_user_do|class::form-signin|role::form}
+{FORMSTART|login_user_do{%script_extension}|class::form-signin|role::form}
         <div class="input-group mb-3">
           {TEXT username {%username} 12 class::form-control placeholder::Username required::1 autofocus::1}
           <div class="input-group-append">
@@ -62,10 +62,10 @@
 {FORMEND}
 
 <p class="mb-1">
-  {LINK|Password forgotten|user_register/resetpassword}
+  {LINK|Password forgotten|user_register{%script_extension}/resetpassword}
 </p>
 %if({%registration_allowed}):
 <p class="mb-0">
-  {LINK|Register user|user_register}<br>
+  {LINK|Register user|user_register{%script_extension}}<br>
 </p>
 %endif;

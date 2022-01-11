@@ -1,16 +1,17 @@
 <?php
 namespace booosta\usersystem;
 
-include_once '../../chroot.php';
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use booosta\Framework as b;
+b::croot();
 b::load();
+
 
 class App extends Webappuser
 {
   #protected $usersystem_dir = '';
-  public $base_dir = '../../../';
+  public $base_dir = '/';
   public $tpldir = 'vendor/booosta/usersystem/';
   public $translator_dir = 'vendor/booosta/usersystem';
   protected $translator_merge = true;
@@ -25,7 +26,7 @@ class App extends Webappuser
     session_destroy();
     if($this->index) $this->backpage = $this->index; else $this->backpage = 'user.php';
     #if($this->index) $this->backpage = $this->base_dir . $this->index; else $this->backpage = 'user.php';
-    $this->maintpl = 'systpl/feedback.tpl';
+    $this->maintpl = \booosta\webapp\FEEDBACK;
 
     if(method_exists($this, 'after_logout')) $this->after_logout();
     if(method_exists($this, 'after_logout_user')) $this->after_logout_user();

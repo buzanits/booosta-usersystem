@@ -19,17 +19,13 @@ function response_username_()
  {HIDDEN action registerdo}
  {HIDDEN|form_token|{%form_token}}
 
-{BBOXROWSTART}
-{BBOXSTART 6}
  {BTEXT username texttitle::Username onBlur::request_username();} 
  {BPASSWORD password Password size::4}
  {BPASSWORD|password1|Repeat password}
  {BTEXT email  texttitle::E-Mail}
 
  {BFORMSUBMIT class::center-block}
-{BBOXEND}
-{BBOXROWEND}
 {BFORMEND}
-{LINK Login-page {%base_dir}user.php}
+{LINK Login-page {%base_dir}vendor/booosta/usersystem/exec/user.php}
 {/BPANEL}
 {/BBOXCENTER}
