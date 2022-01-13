@@ -1,18 +1,20 @@
 <?php
 namespace booosta\usersystem;
 
-include '../../chroot.php';
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use booosta\Framework as b;
+b::croot();
 b::load();
+
 
 class App extends Webappadmin
 {
-  public $base_dir = '../../../';
-  public $usersystem_dir = '';
-  public $tpldir = 'vendor/booosta/usersystem/';
-  public $translator_dir = 'vendor/booosta/usersystem';
+  public $base_dir = '/';
+  #public $base_dir = '../../../../';
+  public $usersystem_dir = '/vendor/booosta/usersystem/exec/';
+  public $tpldir = '/vendor/booosta/usersystem/exec/tpl/';
+  public $translator_dir = '/vendor/booosta/usersystem';
   public $translator_merge = true;
 
   protected function init()
@@ -25,7 +27,7 @@ class App extends Webappadmin
     if(is_object($user) && $user->is_valid()):
       if($this->VAR['backpage']) $this->backpage = $this->base_dir . $this->VAR['backpage'];
       elseif($this->index) $this->backpage = $this->index;
-      else $this->backpage = 'vendor/booosta/usersystem/adminuser.php';
+      else $this->backpage = 'vendor/booosta/usersystem/exec/adminuser.php';
 
       if($this->index) $this->backpage = $this->index; else $this->backpage = 'vendor/booosta/usersystem/admin.php';
       $this->TPL['AUTH_USER'] = $user->get_username();
@@ -38,10 +40,10 @@ class App extends Webappadmin
       $cfg_toptpl = $this->config('login_toptpl');
 
       if($template_module && $cfg_toptpl) $this->toptpl = "$this->base_dir/vendor/booosta/$template_module/$cfg_toptpl";
-      elseif($template_module) $this->toptpl = "{$this->base_dir}vendor/booosta/$template_module/login.html";
-      elseif($template_module) $this->toptpl = "$this->base_dir/vendor/booosta/$template_module/blank.html";
+      elseif($template_module) $this->toptpl = "{$this->base_dir}vendor/booosta/$template_module/src/login.html";
+      elseif($template_module) $this->toptpl = "$this->base_dir/vendor/booosta/$template_module/src/blank.html";
       elseif($cfg_toptpl) $this->toptpl = $this->base_dir . $cfg_toptpl;
-      else $this->toptpl = $this->base_dir . 'vendor/booosta/bootstrap/blank.html';
+      else $this->toptpl = $this->base_dir . 'vendor/booosta/bootstrap/src/blank.html';
       #\booosta\debug("toptpl: $this->toptpl");
 
       $this->extra_templates = ['MAIN' => $this->usersystem_dir . "tpl/adminuser_login.tpl"];

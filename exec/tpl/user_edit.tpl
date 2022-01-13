@@ -1,13 +1,13 @@
 {BBOXCENTER}
 {BPANEL|paneltitle::Edit User}
 
-{BFORMSTART|admin_user}
+{BFORMSTART|admin_user{%script_extension}}
 {HIDDEN|action|editdo}
 {HIDDEN|id|{%object_id}}
 {HIDDEN|form_token|{%form_token}}
 
   {BCHECKBOX|active|{%active}|texttitle::Active}
-  {BEMAIL|username|{%username}|texttitle::Username (= Email)|val-required::1}
+  {BTEXT|username|{%username}|texttitle::Username|val-required::1}
   {%sel_region}
   {BPASSWORD|password|Password (leave empty for no change)}
   {BPASSWORD|password1|Repeat Password|val-equalTo::password|val-err-equalTo::The passwords must be equal}
@@ -18,7 +18,7 @@
 
   {BFORMSUBMIT|class::center-block}
   
-  {BLINK|Force password change|admin_user.php?action=forcepwchange&user_id={%object_id}}
+  {BLINK|Force password change|admin_user{%script_extension}{%script_actionstr}forcepwchange{%script_divider}user_id={%object_id}}
 {BFORMEND}
 
 {/BPANEL}

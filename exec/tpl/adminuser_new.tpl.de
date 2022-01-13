@@ -1,7 +1,7 @@
 {BBOXCENTER}
 {BPANEL|paneltitle::Neuer Administrator}
  
-{BFORMSTART|admin_adminuser}
+{BFORMSTART|admin_adminuser{%script_extension}}
 {HIDDEN|action|newdo}
 {HIDDEN|form_token|{%form_token}}
 

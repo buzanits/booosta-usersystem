@@ -1,6 +1,6 @@
 {BBOXCENTER}
 {BPANEL|paneltitle::Benutzer}
-{BLINKADD|Neuer Benutzer|admin_user/new}
+{BLINKADD|Neuer Benutzer|admin_user{%script_extension}{%script_actionstr}new}
 <br>
 <br>
 

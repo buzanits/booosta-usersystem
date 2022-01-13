@@ -1,6 +1,6 @@
 <table>
 <tr><td>Logged in as {%AUTH_USER}</td></tr>
 <tr><td>
-{LINK|Logout|logout_adminuser}</td></tr>
+{LINK|Logout|logout_adminuser{%script_extension}}</td></tr>
 </table>
 <br><br>

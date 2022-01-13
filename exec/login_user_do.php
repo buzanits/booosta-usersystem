@@ -33,7 +33,7 @@ class App extends Webappuser
     elseif($this->index) $this->backpage = $this->index; 
     #elseif($this->index) $this->backpage = $this->base_dir . $this->index; 
     else $this->backpage = 'vendor/booosta/usersystem/user.php';
-    b::debug("backpage: $this->backpage");
+    #b::debug("backpage: $this->backpage");
 
     $this->TPL['AUTH_USER'] = $user->get_username();
     $this->user_id = $user->get_id();

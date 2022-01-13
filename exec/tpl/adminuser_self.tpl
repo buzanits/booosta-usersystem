@@ -1,18 +1,18 @@
 {BBOXCENTER}
 {BPANEL|paneltitle::Change Password}
 
-{BFORMSTART|admin_self|onSubmit::return checkForm();}
- {HIDDEN action editdo}
- {HIDDEN id {%id}}
+{BFORMSTART|admin_self{%script_extension}|onSubmit::return checkForm();}
+ {HIDDEN|action|editdo}
+ {HIDDEN|id|{%id}}
  {HIDDEN|form_token|{%form_token}}
 
  
- {BSTATIC {*username} Username}
+ {BSTATIC|{*username}|Username}
  {BPASSWORD|curpassword|Current Password}
  {BPASSWORD|password|New Password}
  {BPASSWORD|password1|Repeat new password}
 
- {BFORMSUBMIT class::center-block}
+ {BFORMSUBMIT|class::center-block}
 {BFORMEND}
 {/BPANEL}
 {/BBOXCENTER}

@@ -1,7 +1,7 @@
 {BBOXCENTER}
 {BPANEL|paneltitle::Administrator bearbeiten}
 
-{BFORMSTART|admin_adminuser}
+{BFORMSTART|admin_adminuser{%script_extension}}
 {HIDDEN|action|editdo}
 {HIDDEN|id|{%object_id}}
 {HIDDEN|form_token|{%form_token}}

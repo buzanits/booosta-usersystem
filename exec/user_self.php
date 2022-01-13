@@ -1,17 +1,17 @@
 <?php
 namespace booosta\usersystem;
 
-include '../../chroot.php';
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use booosta\Framework as b;
+b::croot();
 b::load();
 
 class App extends Webappuser
 {
   protected $name = 'user';
-  public $base_dir = '../../../';
-  public $tpldir = 'vendor/booosta/usersystem/';
+  public $base_dir = '/';
+  public $subtpldir = 'vendor/booosta/usersystem/exec/';
   public $translator_dir = 'vendor/booosta/usersystem';
   protected $translator_merge = true;
 
@@ -31,11 +31,12 @@ class App extends Webappuser
     unset($_SESSION['login_token_backpage']);
   }
 
-  protected function before_edit_($id, $data, &$obj)
+  protected function before_edit_($id, $data, $obj)
   {
     if($password = $data['password']):
       $cur_pw = $this->encrypt($data['curpassword']);
-      $act_pw = $this->DB->query_value("select password from user where id='$id'");
+      $act_pw = $this->DB->query_value("select password from user where id=?", $id);
+      #b::debug("cur_pw: $cur_pw, act_pw: $act_pw");
       if($act_pw && $cur_pw != $act_pw) $this->raise_error($this->t('Current password not correct'));
 
       $obj->set('password', $this->encrypt($password));
@@ -52,11 +53,11 @@ class App extends Webappuser
     $check->set_errormessage('equal_field', $this->t('The passwords must match'));
     $this->add_javascript($check);
 
-    $this->TPL['oldpassword'] = $this->decrypt($this->get_data('password'));
-    $this->add_jquery_ready('add_toggle_checkbox("pwd");');
+    #$this->TPL['oldpassword'] = $this->decrypt($this->get_data('password'));
+    #$this->add_jquery_ready('add_toggle_checkbox("pwd");');
 
-    $this->show_tokenlinks_user();
-    
+    if(method_exists($this, 'show_tokenlinks_user')) $this->show_tokenlinks_user();
+ 
     // forced password change, if "changepassword" is set in usersettings
     $userobj = $this->getDataobject('user', $this->user_id);
     if($userobj->get('usersettings', 'changepassword')) $this->TPL['must_change_password'] = true;

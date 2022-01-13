@@ -1,16 +1,17 @@
 <?php
 namespace booosta\usersystem;
 
-include '../../chroot.php';
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use booosta\Framework as b;
+b::croot();
 b::load();
+
 
 class App extends Webappadmin
 {
   #protected $usersystem_dir = '';
-  public $base_dir = '../../../';
+  public $base_dir = '/';
   public $tpldir = 'vendor/booosta/usersystem/';
   public $translator_dir = 'vendor/booosta/usersystem';
   public $translator_merge = true;
@@ -33,10 +34,9 @@ class App extends Webappadmin
     #elseif($this->index) $this->backpage = $this->base_dir . $this->index;
     else $this->backpage = 'vendor/booosta/usersystem/adminuser.php';
 
-    if($this->index) $this->backpage = $this->index; else $this->backpage = 'vendor/booosta/usersystem/admin.php';
-    #if($this->index) $this->backpage = $this->base_dir . $this->index; else $this->backpage = 'vendor/booosta/usersystem/admin.php';
     $this->TPL['AUTH_USER'] = $user->get_username();
-    $this->maintpl = 'systpl/feedback.tpl';
+    $this->user_id = $user->get_id();
+    $this->maintpl = \booosta\webapp\FEEDBACK;
 
     if(!is_object($user) || !$user->is_valid()) $this->auth_user();
 

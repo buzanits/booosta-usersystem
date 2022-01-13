@@ -1,17 +1,17 @@
 <?php
 namespace booosta\usersystem;
 
-include '../../chroot.php';
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use booosta\Framework as b;
+b::croot();
 b::load();
 
 class App extends Webappadmin
 {
   protected $name = 'user';
-  public $base_dir = '../../../';
-  public $tpldir = 'vendor/booosta/usersystem/';
+  public $base_dir = '/';
+  public $subtpldir = 'vendor/booosta/usersystem/exec/';
   public $translator_dir = 'vendor/booosta/usersystem';
   protected $translator_merge = true;
 
@@ -20,6 +20,7 @@ class App extends Webappadmin
   protected $blank_fields = 'password';
   protected $checkbox_fields = 'active';
   protected $use_datatable = true;
+  protected $ui_modal_cancelpage = 'admin_user.php';
 
 
   protected function before_add_($data, $obj)
@@ -42,7 +43,7 @@ class App extends Webappadmin
     $privileges = $this->makeInstance("\\booosta\\usersystem\\User_Privileges");
     $privileges->add_user_privilege($newid, 'edit self');
     if($this->edit_params) $this->backpage = "admin_user$this->edit_params$newid";
-    else $this->backpage = "vendor/booosta/usersystem/admin_user.php?action=edit&object_id=$newid";
+    else $this->backpage = "vendor/booosta/usersystem/exec/admin_user.php?action=edit&object_id=$newid";
   }
 
   protected function before_edit_($id, $data, $obj)
@@ -77,8 +78,10 @@ class App extends Webappadmin
 
     $this->TPL = array_merge($this->TPL, $this->get_data('usersettings'));
     
-    $this->show_tokenlinks($this->id, 'user');
-    $_SESSION['login_token_backpage'] = "{$this->base_dir}vendor/booosta/usersystem/admin_user.php?action=edit&object_id=$this->id";
+    if(method_exists($this, 'show_tokenlinks')) $this->show_tokenlinks($this->id, 'user');
+    $_SESSION['login_token_backpage'] = "{$this->base_dir}vendor/booosta/usersystem/exec/admin_user.php?action=edit&object_id=$this->id";
+
+    $this->TPL['forcepw_link'] = $this->config('urlhandlermode') ? "admin_user/forcepwchange/$this->id" : "admin_user.php?action=forcepwchange&user_id=$this->id";
   }
 
   protected function before_action_editdo()

@@ -15,7 +15,7 @@ class App extends Webappuser
   public $base_dir = '/';
   #public $tpldir = 'vendor/booosta/usersystem/';
   public $subtpldir = 'vendor/booosta/usersystem/exec/';
-  public $translator_dir = 'vendor/booosta/usersystem';
+  public $translator_dir = 'vendor/booosta/usersystem/exec';
   protected $translator_merge = true;
   protected $cfg_toptpl = 'blank.html';
 
@@ -152,7 +152,7 @@ http://{$_SERVER['SERVER_NAME']}$this->phpself?action=confirm&username={$data['u
       $error = true;
     endif;
 
-    if($error || $email != $this->VAR['email'])
+    if($error || filter_var($email, FILTER_VALIDATE_EMAIL) === false)
       $this->raise_error($this->t('username or Email not found'), 'user_register.php?action=resetpassword');
 
     $token = md5(uniqid());
@@ -174,7 +174,7 @@ http://{$_SERVER['SERVER_NAME']}$this->phpself?action=resetpasswordconfirm&usern
     $this->maintpl = \booosta\webapp\FEEDBACK;
     $this->TPL['output'] = $this->t('You will receive an email with a link to the password reset page');
     $this->goback = false;
-    $this->backpage = 'user.php';
+    $this->backpage = 'vendor/booosta/usersystem/exec/user.php';
   }
 
   protected function action_resetpasswordconfirm()

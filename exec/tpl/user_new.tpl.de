@@ -1,11 +1,11 @@
 {BBOXCENTER}
 {BPANEL|paneltitle::Neuer Benutzer}
 
-{BFORMSTART|admin_user}
+{BFORMSTART|admin_user{%script_extension}}
 {HIDDEN|action|newdo}
 {HIDDEN|form_token|{%form_token}}
 
-  {BEMAIL|username|texttitle::Benutzername (= Email)|val-required::1}
+  {BTEXT|username|texttitle::Benutzername|val-required::1}
   {%sel_region}
   {BPASSWORD|password|Passwort|val-required::1}
   {BPASSWORD|password1|Passwort wiederholen|val-required::1|val-equalTo::password|val-err-equalTo::Die Passwörter müssen überein stimmen}

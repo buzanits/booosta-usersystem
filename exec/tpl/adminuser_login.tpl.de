@@ -7,7 +7,7 @@
   <center>Sie sind nicht eingeloggt oder Ihre Sitzung ist abgelaufen.</center>
 </div>
 
-{FORMSTART|login_adminuser_do|class::form-signin|role::form}
+{FORMSTART|login_adminuser_do{%script_extension}|class::form-signin|role::form}
         <div class="input-group mb-3">
           {TEXT username {%username} 12 class::form-control placeholder::Benutzername required::1 autofocus::1}
           <div class="input-group-append">

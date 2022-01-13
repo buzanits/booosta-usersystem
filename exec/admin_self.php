@@ -1,17 +1,18 @@
 <?php
 namespace booosta\usersystem;
 
-include '../../chroot.php';
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use booosta\Framework as b;
+b::croot();
 b::load();
+
 
 class App extends Webappadmin
 {
   protected $name = 'adminuser';
-  public $base_dir = '../../../';
-  public $tpldir = 'vendor/booosta/usersystem/';
+  public $base_dir = '/';
+  public $subtpldir = 'vendor/booosta/usersystem/exec/';
   public $translator_dir = 'vendor/booosta/usersystem';
   protected $translator_merge = true;
 
@@ -21,7 +22,7 @@ class App extends Webappadmin
 
     $this->privs['edit'] = 'edit self';
     $this->real_base_dir = $this->real_basedir();
-    $this->leftmenu = $this->init_menu('local/leftmenudefinitionfile_admin.php', 'tpl/leftmenu_admin.tpl.php', 'left');
+    #$this->leftmenu = $this->init_menu('local/leftmenudefinitionfile_admin.php', 'tpl/leftmenu_admin.tpl.php', 'left');
   }
 
   protected function action_default()
@@ -35,7 +36,7 @@ class App extends Webappadmin
   {
     if($password = $data['password']):
       $cur_pw = $this->encrypt($data['curpassword']);
-      $act_pw = $this->DB->query_value("select password from adminuser where id='$id'");
+      $act_pw = $this->DB->query_value("select password from adminuser where id=?", $id);
       if($cur_pw != $act_pw) $this->raise_error($this->t('Current password not correct'));
 
       $obj->set('password', $this->encrypt($password));
@@ -50,7 +51,7 @@ class App extends Webappadmin
     $check->add_equal_field('password', 'password1');
     $this->add_javascript($check);
 
-    $this->show_tokenlinks();
+    if(method_exists($this, 'show_tokenlinks')) $this->show_tokenlinks();
   }
 
   protected function before_action_editdo()

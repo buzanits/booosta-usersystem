@@ -1,13 +1,13 @@
 {BBOXCENTER}
 {BPANEL|paneltitle::Benutzer bearbeiten}
 
-{BFORMSTART|admin_user}
+{BFORMSTART|admin_user{%script_extension}}
 {HIDDEN|action|editdo}
 {HIDDEN|id|{%object_id}}
 {HIDDEN|form_token|{%form_token}}
 
   {BCHECKBOX|active|{%active}|texttitle::Aktiv}
-  {BEMAIL|username|{%username}|texttitle::Benutzername (= Email)|val-required::1}
+  {BTEXT|username|{%username}|texttitle::Benutzername|val-required::1}
   {%sel_region}
   {BPASSWORD|password|Passwort (leer für keine Änderung)}
   {BPASSWORD|password1|Passwort wiederholen|val-equalTo::password|val-err-equalTo::Die Passwörter müssen überein stimmen}
@@ -22,7 +22,7 @@
 {/BPANEL}
 {/BBOXCENTER}
 
-{BLINK|Passwortänderung erzwingen|admin_user/forcepwchange/{%object_id}}
+{BLINK|Passwortänderung erzwingen|{%forcepw_link}}
 
 <br><br>
 

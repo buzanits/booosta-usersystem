@@ -61,7 +61,7 @@
 {FORMEND}
 
 <p class="mb-1">
-  {LINK|Passwort vergessen|user_register{%script_extension}/resetpassword}
+  {LINK|Passwort vergessen|user_register{%script_extension}{%script_actionstr}resetpassword}
 </p>
 %if({%registration_allowed}):
 <p class="mb-0">
