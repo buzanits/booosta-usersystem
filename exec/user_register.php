@@ -128,11 +128,11 @@ http://{$_SERVER['SERVER_NAME']}$this->phpself?action=confirm&username={$data['u
       $message = "username {$this->VAR['username']} not valid.";
     endif;
 
-    $this->maintpl = 'systpl/feedback.tpl';
+    $this->maintpl = \booosta\webapp\FEEDBACK;
     $this->goback = false;
     if($this->index) $this->backpage = $this->base_dir . $this->index; else $this->backpage = '../user.php';
     $this->TPL['output'] = $message;
-    $this->extra_templates['LEFT'] = 'systpl/empty.tpl';
+    $this->extra_templates['LEFT'] = \booosta\webapp\FEEDBACK;
   }
       
   protected function action_resetpassword()
@@ -198,7 +198,7 @@ http://{$_SERVER['SERVER_NAME']}$this->phpself?action=resetpasswordconfirm&usern
       endif;
     endif;
 
-    $this->raise_error($this->t('Wrong token or username.'), $this->usersystem_dir . 'user.php');
+    $this->raise_error($this->t('Wrong token or username.'), $this->usersystem_dir . 'vendor/booosta/usersystem/exec/user.php');
   }
 
   protected function action_setpassword()
@@ -219,12 +219,12 @@ http://{$_SERVER['SERVER_NAME']}$this->phpself?action=resetpasswordconfirm&usern
 
         $this->TPL['output'] = $this->t('Your password has been reset. You can now login in with the new password');
         $this->goback = false;
-        $this->backpage = 'user.php';
+        $this->backpage = 'vendor/booosta/usersystem/exec/user.php';
         return;
       endif;
     endif;
 
-    $this->raise_error($this->t('Wrong token or username.'), $this->base_dir . 'user.php');
+    $this->raise_error($this->t('Wrong token or username.'), $this->base_dir . 'vendor/booosta/usersystem/exec/user.php');
   }
 }
 
