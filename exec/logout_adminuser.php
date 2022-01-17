@@ -24,7 +24,9 @@ class App extends Webappadmin
     if($this->user && is_callable([$this->user, 'after_logout'])) $this->user->after_logout();
     $this->user = null;
     session_destroy();
-    if($this->index) $this->backpage = $this->index; else $this->backpage = 'admin.php';
+    if($this->index) $this->backpage = $this->index; 
+    elseif($this->loginscript) $this->backpage = $this->loginscript;
+    else $this->backpage = 'admin.php';
     #if($this->index) $this->backpage = $this->base_dir . $this->index; else $this->backpage = 'admin.php';
     $this->maintpl = \booosta\webapp\FEEDBACK;
 

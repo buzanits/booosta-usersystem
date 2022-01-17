@@ -21,7 +21,7 @@ class App extends Webappadmin
   #protected $header = 'Username,Comment,Edit,Delete';
   protected $use_datatable = true;
   protected $use_subtablelink = false;
-  protected $ui_modal_cancelpage = 'admin_adminuser.php';
+  #protected $ui_modal_cancelpage = 'admin_adminuser.php';
 
   protected function init()
   {

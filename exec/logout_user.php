@@ -24,6 +24,8 @@ class App extends Webappuser
     if($this->user && is_callable([$this->user, 'after_logout'])) $this->user->after_logout();
     $this->user = null;
     session_destroy();
+    #b::debug('session destroyed');
+
     if($this->index) $this->backpage = $this->index; else $this->backpage = 'user.php';
     #if($this->index) $this->backpage = $this->base_dir . $this->index; else $this->backpage = 'user.php';
     $this->maintpl = \booosta\webapp\FEEDBACK;

@@ -20,13 +20,12 @@ class App extends Webappuser
     #\booosta\debug($this->user);
     switch($this->user->get_user_type()):
       case 'adminuser':
-        $this->redirect('/vendor/booosta/usersystem/exec/admin_self.php');
+        $dest = $this->script_extension == '.php' ? '/vendor/booosta/usersystem/exec/admin_self.php' : '/admin_self';
+        $this->redirect($dest);
       break;
       case 'user':
-        $this->redirect('/vendor/booosta/usersystem/exec/user_self.php');
-      break;
-      case 'publicuser':
-        $this->redirect('/vendor/booosta/usersystem/exec/publicuser_self.php');
+        $dest = $this->script_extension == '.php' ? '/vendor/booosta/usersystem/exec/user_self.php' : '/user_self';
+        $this->redirect($dest);
       break;
     endswitch;
   }

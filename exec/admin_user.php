@@ -20,7 +20,7 @@ class App extends Webappadmin
   protected $blank_fields = 'password';
   protected $checkbox_fields = 'active';
   protected $use_datatable = true;
-  protected $ui_modal_cancelpage = 'admin_user.php';
+  #protected $ui_modal_cancelpage = 'admin_user.php';
 
 
   protected function before_add_($data, $obj)
