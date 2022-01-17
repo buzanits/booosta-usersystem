@@ -17,6 +17,7 @@ class Webappuser extends \booosta\webapp\Webapp
     $this->user_class = 'user';
     parent::__construct($name);
 
+    if($this->script_extension == '') $this->index = 'user';
     #$ext = $this->config('urlhandlermode') ? '' : '.php';
     $this->loginscript = "login_user$this->script_extension";
     #\booosta\Framework::debug($this->loginscript);

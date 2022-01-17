@@ -17,6 +17,7 @@ class Webappadmin extends \booosta\webapp\Webapp
     $this->user_class = 'adminuser';
     parent::__construct($name);
 
+    if($this->script_extension == '') $this->index = 'admin';
     $this->loginscript = "/login_adminuser$this->script_extension";
     #\booosta\Framework::debug($this->loginscript);
     if(is_object($this->user)) $this->user_id = $this->user->get_id();
