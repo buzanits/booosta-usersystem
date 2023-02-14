@@ -20,8 +20,13 @@ class App extends Webappadmin
   protected $blank_fields = 'password';
   protected $checkbox_fields = 'active';
   protected $use_datatable = true;
-  #protected $ui_modal_cancelpage = 'admin_user.php';
+  protected $urlhandler_action_paramlist = ['new' => 'action/customer', 'forcepwchange' => 'action/user_id'];
 
+
+  protected function before_action_new()
+  {
+    $this->pass_vars_to_template('customer');
+  }
 
   protected function before_add_($data, $obj)
   {
@@ -43,7 +48,9 @@ class App extends Webappadmin
     $privileges = $this->makeInstance("\\booosta\\usersystem\\User_Privileges");
     $privileges->add_user_privilege($newid, 'edit self');
     if($this->edit_params) $this->backpage = "admin_user$this->edit_params$newid";
-    else $this->backpage = "vendor/booosta/usersystem/exec/admin_user.php?action=edit&object_id=$newid";
+    else $this->backpage = "admin_user/edit/$newid";
+
+    #b::debug("backpage: $this->backpage");
   }
 
   protected function before_edit_($id, $data, $obj)
@@ -76,7 +83,7 @@ class App extends Webappadmin
     $sel->set_type('tags');
     $this->TPL['sel_roles'] = $sel->get_html();
 
-    $this->TPL = array_merge($this->TPL, $this->get_data('usersettings'));
+    $this->TPL = array_merge($this->TPL, $this->get_data('usersettings') ?? []);
     
     if(method_exists($this, 'show_tokenlinks')) $this->show_tokenlinks($this->id, 'user');
     $_SESSION['login_token_backpage'] = "{$this->base_dir}vendor/booosta/usersystem/exec/admin_user.php?action=edit&object_id=$this->id";
@@ -101,17 +108,19 @@ class App extends Webappadmin
   protected function action_forcepwchange()
   {
     $userobj = $this->getDataobject('user', $this->VAR['user_id']);
-    if($userobj->set('usersettings', 'changepassword', true));
-    $userobj->update();
+    if($userobj):
+      $userobj->set('usersettings', 'changepassword', true);
+      $userobj->update();
+    endif;
 
     $this->maintpl = \booosta\webapp\FEEDBACK;
     $this->TPL['output'] = "User will be forced to change password after next login";
-    $this->backpage = "admin_user.php?action=edit&object_id={$this->VAR['user_id']}";
+    $this->backpage = "admin_user/edit/{$this->VAR['user_id']}";
     $this->goback = false;
   }
 }
 
-if(is_readable('local/classes_user.php')) include_once 'local/classes_user.php';
+if(is_readable('incl/classes_user.php')) include_once 'incl/classes_user.php';
 if(class_exists("\\booosta\\usersystem\\App1")) $app = new App1(); else $app = new App();
 $app->auth_user();
 $app();

@@ -18,16 +18,20 @@ class App extends Webappuser
   protected function action_default()
   {
     #\booosta\debug($this->user);
-    switch($this->user->get_user_type()):
-      case 'adminuser':
-        $dest = $this->script_extension == '.php' ? '/vendor/booosta/usersystem/exec/admin_self.php' : '/admin_self';
-        $this->redirect($dest);
-      break;
-      case 'user':
-        $dest = $this->script_extension == '.php' ? '/vendor/booosta/usersystem/exec/user_self.php' : '/user_self';
-        $this->redirect($dest);
-      break;
-    endswitch;
+    if(!is_object($this->user)):
+      $this->redirect('/');
+    else:
+      switch($this->user->get_user_type()):
+        case 'adminuser':
+          $dest = $this->script_extension == '.php' ? '/vendor/booosta/usersystem/exec/admin_self.php' : '/admin_self';
+          $this->redirect($dest);
+        break;
+        case 'user':
+          $dest = $this->script_extension == '.php' ? '/vendor/booosta/usersystem/exec/user_self.php' : '/user_self';
+          $this->redirect($dest);
+        break;
+      endswitch;
+    endif;
   }
 }
 

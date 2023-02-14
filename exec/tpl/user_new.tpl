@@ -3,6 +3,7 @@
 
 {BFORMSTART|admin_user{%script_extension}}
 {HIDDEN|action|newdo}
+{HIDDEN|customer|{%customer}}
 {HIDDEN|form_token|{%form_token}}
 
   {BTEXT|username|texttitle::Username|val-required::1}

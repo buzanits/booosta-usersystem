@@ -3,9 +3,10 @@
 
 {BFORMSTART|admin_user{%script_extension}}
 {HIDDEN|action|newdo}
+{HIDDEN|customer|{%customer}}
 {HIDDEN|form_token|{%form_token}}
 
-  {BTEXT|username|texttitle::Benutzername|val-required::1}
+  {BTEXT|username|{%username}|texttitle::Benutzername|val-required::1}
   {%sel_region}
   {BPASSWORD|password|Passwort|val-required::1}
   {BPASSWORD|password1|Passwort wiederholen|val-required::1|val-equalTo::password|val-err-equalTo::Die Passwörter müssen überein stimmen}
