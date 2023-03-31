@@ -27,7 +27,9 @@ class App extends Webappadmin
 
     if($this->VAR['rememberme']) $param['store_logincookie'] = true;
 
-    $user = $this->makeInstance("\\booosta\\usersystem\\adminuser", $this->VAR['username'], $this->VAR['password'], $param);
+    $password = $this->VAR['password'];
+    unset($this->VAR['password']);  // remove password from memory after usage
+    $user = $this->makeInstance("\\booosta\\usersystem\\adminuser", $this->VAR['username'], $password, $param);
 
     if($this->VAR['backpage']) $this->backpage = $this->base_dir . $this->VAR['backpage'];
     elseif($this->index) $this->backpage = $this->index;
