@@ -47,6 +47,8 @@ class App extends Webappadmin
   {
     $privileges = $this->makeInstance("\\booosta\\usersystem\\User_Privileges");
     $privileges->add_user_privilege($newid, 'edit self');
+
+    $newid = $this->encID($newid);
     if($this->edit_params) $this->backpage = "admin_user$this->edit_params$newid";
     else $this->backpage = "admin_user/edit/$newid";
 

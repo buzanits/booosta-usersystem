@@ -19,9 +19,12 @@ class App extends Webappuser
   protected $translator_merge = true;
   protected $cfg_toptpl = 'blank.html';
 
+  protected $urlhandler_action_paramlist = ['confirm' => 'action/username/token', 'resetpasswordconfirm' => 'action/username/token'];
+
 
   protected function action_default()
   {
+    #b::debug($_SERVER);
     $this->maintpl = 'tpl/register.tpl';
     $this->extra_templates['LEFT'] = 'systpl/empty.tpl';
     if(!$this->config('allow_registration')) $this->raise_error($this->t('Registration not allowed'), 'user.php');
@@ -39,7 +42,8 @@ class App extends Webappuser
 
     $ajax = $this->makeInstance('Ajax', 'username');
     $this->add_javascript($ajax, true);
-    $this->TPL['ajaxurl'] = "http://{$_SERVER['SERVER_NAME']}$this->phpself?action=checkusername";
+    $prot = $_SERVER['HTTPS'] == 'on' ? 'https' : 'http';
+    $this->TPL['ajaxurl'] = "$prot://{$_SERVER['SERVER_NAME']}/user_register/checkusername";
 
     $this->TPL['username_taken'] = $this->t('username already taken');
     $this->generate_form_token();
@@ -63,7 +67,7 @@ class App extends Webappuser
     $this->action_newdo();
 
     $this->goback = false;
-    if($this->index) $this->backpage = $this->base_dir . $this->index; else $this->backpage = '../user_login.php';
+    if($this->index) $this->backpage = $this->base_dir . $this->index; else $this->backpage = '/user';
 
     $this->TPL['output'] = $this->t('Register success');
   }
@@ -85,12 +89,17 @@ class App extends Webappuser
       $token = md5(uniqid());
       $obj->set('usersettings', ['email' => $data['email'], 'token' => $token]);
 
+      $prot = $_SERVER['HTTPS'] == 'on' ? 'https' : 'http';
       $text = $this->t('You have been registered as') . " {$data['username']}.<br>\n<br>\n" . 
 $this->t('Click on the following link to complete your registration') . ":<br>\n
-<a href='http://{$_SERVER['SERVER_NAME']}$this->phpself?action=confirm&username={$data['username']}&token=$token'>
-http://{$_SERVER['SERVER_NAME']}$this->phpself?action=confirm&username={$data['username']}&token=$token</a><br>\n<br>\n";
+<a href='$prot://{$_SERVER['SERVER_NAME']}/user_register/confirm/{$data['username']}/$token'>
+$prot://{$_SERVER['SERVER_NAME']}/user_register/confirm/{$data['username']}/$token</a><br>\n<br>\n";
+#$this->t('Click on the following link to complete your registration') . ":<br>\n
+#<a href='http://{$_SERVER['SERVER_NAME']}$this->phpself?action=confirm&username={$data['username']}&token=$token'>
+#http://{$_SERVER['SERVER_NAME']}$this->phpself?action=confirm&username={$data['username']}&token=$token</a><br>\n<br>\n";
 
-      $mailer = $this->makeInstance('Email', $this->config('mail_sender'), $data['email'], $this->t('Your registration with Booosta'), $text);
+      $subject = $this->t('Your registration with') . ' ' . $this->config('site_name');
+      $mailer = $this->makeInstance('Email', $this->config('mail_sender'), $data['email'], $subject, $text);
       if($this->config('mail_backend') == 'smtp'):
         $mailer->set_smtp_params($this->config('mail_smtp_params'));
         $mailer->set_backend('smtp');
@@ -130,7 +139,7 @@ http://{$_SERVER['SERVER_NAME']}$this->phpself?action=confirm&username={$data['u
 
     $this->maintpl = \booosta\webapp\FEEDBACK;
     $this->goback = false;
-    if($this->index) $this->backpage = $this->base_dir . $this->index; else $this->backpage = '../user.php';
+    if($this->index) $this->backpage = $this->base_dir . $this->index; else $this->backpage = '/user';
     $this->TPL['output'] = $message;
     $this->extra_templates['LEFT'] = \booosta\webapp\FEEDBACK;
   }
@@ -153,17 +162,19 @@ http://{$_SERVER['SERVER_NAME']}$this->phpself?action=confirm&username={$data['u
     endif;
 
     if($error || filter_var($email, FILTER_VALIDATE_EMAIL) === false)
-      $this->raise_error($this->t('username or Email not found'), 'user_register.php?action=resetpassword');
+      $this->raise_error($this->t('username or Email not found'), '/user_register/resetpassword');
 
     $token = md5(uniqid());
     $obj->set('usersettings', 'pwdtoken', $token);
     $obj->update();
 
+    $prot = $_SERVER['HTTPS'] == 'on' ? 'https' : 'http';
     $text = $this->t('Your password can be reset using this link') . ":<br>\n
-<a href='http://{$_SERVER['SERVER_NAME']}$this->phpself?action=resetpasswordconfirm&username={$this->VAR['username']}&token=$token'>
-http://{$_SERVER['SERVER_NAME']}$this->phpself?action=resetpasswordconfirm&username={$this->VAR['username']}&token=$token</a><br>\n<br>\n";
+<a href='$prot://{$_SERVER['SERVER_NAME']}/user_register/resetpasswordconfirm/{$this->VAR['username']}/$token'>
+$prot://{$_SERVER['SERVER_NAME']}/user_register/resetpasswordconfirm/{$this->VAR['username']}/$token</a><br>\n<br>\n";
 
-    $mailer = $this->makeInstance('Email', $this->config('mail_sender'), $email, $this->t('Booosta password reset'), $text);
+    $subject = $this->config('site_name') . ' ' . $this->t('password reset');
+    $mailer = $this->makeInstance('Email', $this->config('mail_sender'), $email, $subject, $text);
     if($this->config('mail_backend') == 'smtp'):
       $mailer->set_smtp_params($this->config('mail_smtp_params'));
       $mailer->set_backend('smtp');
@@ -174,7 +185,7 @@ http://{$_SERVER['SERVER_NAME']}$this->phpself?action=resetpasswordconfirm&usern
     $this->maintpl = \booosta\webapp\FEEDBACK;
     $this->TPL['output'] = $this->t('You will receive an email with a link to the password reset page');
     $this->goback = false;
-    $this->backpage = 'vendor/booosta/usersystem/exec/user.php';
+    $this->backpage = '/user';
   }
 
   protected function action_resetpasswordconfirm()
@@ -198,7 +209,7 @@ http://{$_SERVER['SERVER_NAME']}$this->phpself?action=resetpasswordconfirm&usern
       endif;
     endif;
 
-    $this->raise_error($this->t('Wrong token or username.'), $this->usersystem_dir . 'vendor/booosta/usersystem/exec/user.php');
+    $this->raise_error($this->t('Wrong token or username.'), '/user');
   }
 
   protected function action_setpassword()
@@ -219,12 +230,12 @@ http://{$_SERVER['SERVER_NAME']}$this->phpself?action=resetpasswordconfirm&usern
 
         $this->TPL['output'] = $this->t('Your password has been reset. You can now login in with the new password');
         $this->goback = false;
-        $this->backpage = 'vendor/booosta/usersystem/exec/user.php';
+        $this->backpage = '/user';
         return;
       endif;
     endif;
 
-    $this->raise_error($this->t('Wrong token or username.'), $this->base_dir . 'vendor/booosta/usersystem/exec/user.php');
+    $this->raise_error($this->t('Wrong token or username.'), '/user');
   }
 }
 

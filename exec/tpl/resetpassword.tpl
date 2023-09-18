@@ -1,7 +1,7 @@
 {BBOXCENTER|bboxsize::10}
 {BPANEL|paneltitle::Reset password}
 
-{BFORMSTART|#}
+{BFORMSTART|user_register}
  {HIDDEN|action|resetpassworddo}
  {HIDDEN|form_token|{%form_token}}
 

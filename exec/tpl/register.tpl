@@ -15,7 +15,7 @@ function response_username_()
 {BBOXCENTER bboxsize::10}
 {BPANEL|paneltitle::Register new user}
 
-{BFORMSTART|user_register.php}
+{BFORMSTART|user_register}
  {HIDDEN action registerdo}
  {HIDDEN|form_token|{%form_token}}
 
@@ -26,6 +26,6 @@ function response_username_()
 
  {BFORMSUBMIT class::center-block}
 {BFORMEND}
-{LINK Login-page {%base_dir}vendor/booosta/usersystem/exec/user.php}
+{LINK|Login-page|user}
 {/BPANEL}
 {/BBOXCENTER}
