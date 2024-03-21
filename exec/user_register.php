@@ -156,7 +156,7 @@ $prot://{$_SERVER['SERVER_NAME']}/user_register/confirm/{$data['username']}/$tok
 
     $obj = $this->getDataobject('user', "username='{$this->VAR['username']}'");
     if(is_object($obj) && $obj->get('id')):
-      $email = $obj->get('usersettings', 'email');
+      $email = $this->DB->query_value('select email from customer where id=?', $obj->get('customer'));
     else:
       $error = true;
     endif;
