@@ -74,6 +74,9 @@ class App extends Webappuser
 
   protected function before_add_($data, $obj)
   {
+    $exists = $this->DB->query_value('select count(*) from user where username=?', $data['username']);
+    if($exists) $this->raise_error($this->t('This username already exists'));
+
     $password = $data['password'];
 
     $obj->set('password', $this->encrypt($password));
@@ -98,7 +101,7 @@ $prot://{$_SERVER['SERVER_NAME']}/user_register/confirm/{$data['username']}/$tok
 #<a href='http://{$_SERVER['SERVER_NAME']}$this->phpself?action=confirm&username={$data['username']}&token=$token'>
 #http://{$_SERVER['SERVER_NAME']}$this->phpself?action=confirm&username={$data['username']}&token=$token</a><br>\n<br>\n";
 
-      $subject = $this->t('Your registration with') . ' ' . $this->config('site_name');
+      $subject = $this->t('Your registration with') . ' ' . $this->config('site_name_text') ?: $this->config('site_name');
       $mailer = $this->makeInstance('Email', $this->config('mail_sender'), $data['email'], $subject, $text);
       if($this->config('mail_backend') == 'smtp'):
         $mailer->set_smtp_params($this->config('mail_smtp_params'));
@@ -156,7 +159,7 @@ $prot://{$_SERVER['SERVER_NAME']}/user_register/confirm/{$data['username']}/$tok
 
     $obj = $this->getDataobject('user', "username='{$this->VAR['username']}'");
     if(is_object($obj) && $obj->get('id')):
-      $email = $this->DB->query_value('select email from customer where id=?', $obj->get('customer'));
+      $email = $obj->get('usersettings', 'email');
     else:
       $error = true;
     endif;

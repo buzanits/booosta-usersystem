@@ -27,4 +27,6 @@ $this->map = [
 'Click on the following link to complete your registration' => 'Klicken Sie auf folgenden Link, um die Registrierung zu bestätigen',
 'Your account has been successully confirmed. You can now login with your username and password.' => 'Ihr Benutzerkonto wurde bestätigt. Sie können sich nun anmelden.',
 
+'This username already exists' => 'Dieser Benutzername existiert bereits',
+
 ];
